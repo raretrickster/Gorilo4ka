@@ -6,25 +6,23 @@
   <meta name="theme-color" content="#0b0f0c" />
   <title>GORILLA.UA</title>
   <style>
-    /* ============ Base / Tokens ============ */
     :root{
       --bg0:#060a08;
       --bg1:#0b110e;
       --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.035);
       --stroke: rgba(255,255,255,.10);
-      --stroke2: rgba(255,255,255,.08);
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.68);
       --muted2: rgba(255,255,255,.55);
       --shadow: 0 18px 70px rgba(0,0,0,.55);
       --shadow2: 0 10px 40px rgba(0,0,0,.40);
-      --r12: 12px;
+
       --r16: 16px;
+      --r18: 18px;
       --r22: 22px;
       --r28: 28px;
 
-      --lime: #9DFF2A;      /* premium lime (not acidic) */
+      --lime: #9DFF2A;
       --lime2:#79d81f;
       --limeGlow: 0 0 22px rgba(157,255,42,.22), 0 0 60px rgba(157,255,42,.12);
       --limeGlowStrong: 0 0 28px rgba(157,255,42,.28), 0 0 90px rgba(157,255,42,.14);
@@ -48,7 +46,6 @@
       overflow-x:hidden;
     }
 
-    /* subtle grain (very light) */
     body:before{
       content:"";
       position:fixed; inset:0;
@@ -62,19 +59,10 @@
     a{color:inherit; text-decoration:none}
     button{font:inherit}
 
-    /* reduce motion */
     @media (prefers-reduced-motion: reduce){
       *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
     }
 
-    /* ============ Layout ============ */
-    .wrap{
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 14px var(--pad) 46px;
-    }
-
-    /* top bar */
     .topbar{
       position:sticky;
       top:0;
@@ -209,11 +197,17 @@
     .btn.primary:hover{filter: saturate(1.10) brightness(1.02)}
     .btn.primary svg{opacity:1}
 
-    /* ============ Hero ============ */
-    .hero{
-      padding: 24px 0 10px;
+    /* Fill screen better */
+    main.wrap{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px var(--pad) 46px;
+      min-height: calc(100svh - 74px); /* topbar approx */
+      display:flex;
+      flex-direction:column;
     }
 
+    .hero{ padding: 24px 0 10px; }
     .badge{
       display:inline-flex;
       align-items:center;
@@ -251,14 +245,6 @@
       max-width: 58ch;
     }
 
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    /* ============ Section Cards ============ */
     .section{
       margin-top: 22px;
       background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
@@ -267,6 +253,7 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
+      flex: 1 1 auto; /* stretch to fill */
     }
     .section:before{
       content:"";
@@ -279,6 +266,9 @@
     .section-inner{
       position:relative;
       padding: 16px;
+      display:flex;
+      flex-direction:column;
+      height:100%;
     }
 
     .section-title{
@@ -305,7 +295,6 @@
       user-select:none;
       -webkit-tap-highlight-color: transparent;
     }
-    .link-card + .link-card{ margin-top: 12px; }
     .link-card:hover{
       border-color: rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
@@ -319,10 +308,7 @@
       box-shadow: 0 18px 60px rgba(0,0,0,.30), var(--limeGlow);
     }
 
-    .lc-left{
-      display:flex; gap:12px; align-items:center;
-      min-width:0;
-    }
+    .lc-left{ display:flex; gap:12px; align-items:center; min-width:0; }
     .ic{
       width: 44px; height:44px;
       border-radius: 16px;
@@ -338,12 +324,7 @@
       box-shadow: inset 0 0 0 1px rgba(157,255,42,.12), var(--limeGlow);
     }
     .lc-text{min-width:0}
-    .lc-title{
-      font-weight: 900;
-      letter-spacing:.2px;
-      margin:0;
-      font-size: 16px;
-    }
+    .lc-title{ font-weight: 900; letter-spacing:.2px; margin:0; font-size: 16px; }
     .lc-desc{
       margin:4px 0 0;
       color: var(--muted);
@@ -367,13 +348,17 @@
     .link-card:hover .arrow{ transform: translateX(1px); border-color: rgba(255,255,255,.14); }
     .link-card.highlight:hover .arrow{ border-color: rgba(157,255,42,.22); }
 
-    /* ============ Accordion "shutter" ============ */
+    /* Shutter */
     .shutter{
       margin-top: 14px;
       border-radius: 18px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
+      margin-top: 14px;
+      flex: 1 1 auto; /* fill remainder */
+      display:flex;
+      flex-direction:column;
     }
     .shutter summary{
       list-style:none;
@@ -410,15 +395,15 @@
       padding: 2px 14px 14px;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.55;
+      flex: 1 1 auto;
     }
     .sh-body b{color: rgba(255,255,255,.88)}
     .sh-body p{margin: 10px 0 0}
     .sh-body .lead{color: rgba(255,255,255,.82); margin-top: 8px}
 
-    /* ============ Footer ============ */
     .footer{
-      margin-top: 18px;
+      margin-top: 14px;
       color: rgba(255,255,255,.40);
       font-size: 12px;
       display:flex;
@@ -426,13 +411,9 @@
       justify-content:space-between;
       gap: 10px;
       padding: 10px 2px 0;
+      flex: 0 0 auto;
     }
-    .tiny{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
+    .tiny{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
     .pill{
       display:inline-flex;
       align-items:center;
@@ -444,7 +425,7 @@
       color: rgba(255,255,255,.55);
     }
 
-    /* ============ Modal (Download chooser) ============ */
+    /* Modal */
     .modal-backdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -455,10 +436,7 @@
       transition: opacity .18s ease;
       z-index: 50;
     }
-    .modal-backdrop.open{
-      opacity:1;
-      pointer-events:auto;
-    }
+    .modal-backdrop.open{ opacity:1; pointer-events:auto; }
 
     .modal{
       position:fixed;
@@ -489,16 +467,8 @@
       gap: 10px;
       border-bottom: 1px solid rgba(255,255,255,.06);
     }
-    .mh-left{
-      display:flex; flex-direction:column; gap:3px;
-      min-width:0;
-    }
-    .mh-title{
-      font-weight: 950;
-      letter-spacing: .4px;
-      margin:0;
-      font-size: 16px;
-    }
+    .mh-left{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+    .mh-title{ font-weight: 950; letter-spacing: .4px; margin:0; font-size: 16px; }
     .mh-sub{
       margin:0;
       color: rgba(255,255,255,.55);
@@ -517,7 +487,6 @@
     }
     .xbtn:active{transform: scale(.98)}
     .xbtn:hover{border-color: rgba(255,255,255,.14)}
-
     .modal-body{ padding: 14px 16px 16px; }
     .two{
       display:grid;
@@ -553,28 +522,22 @@
       flex:0 0 auto;
     }
 
-    /* desktop tweaks */
     @media (min-width: 720px){
       .hero{ padding-top: 30px; }
       .seg{ display:flex; }
       .two{ grid-template-columns: 1fr 1fr; }
       .section-inner{ padding: 18px; }
-      .wrap{ padding-top: 10px; }
+      main.wrap{ padding-top: 10px; }
     }
 
-    /* simple appear animation */
     .reveal{
       opacity: 0;
       transform: translateY(10px);
       transition: opacity .42s ease, transform .42s ease;
       will-change: opacity, transform;
     }
-    .reveal.on{
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.on{ opacity: 1; transform: translateY(0); }
 
-    /* focus styles */
     :focus-visible{
       outline: 2px solid rgba(157,255,42,.55);
       outline-offset: 3px;
@@ -584,386 +547,325 @@
 </head>
 
 <body>
-  <!-- Topbar -->
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand" aria-label="Brand">
-        <div class="logo" aria-hidden="true">
-          <img src="https://i.ifh.cc/m1NNr0.jpg" alt="Logo" />
-        </div>
-        <div class="brand-meta">
-          <div class="brand-name">GORILLA.UA</div>
-          <div class="brand-sub" data-i18n="top_sub">Official links & support</div>
-        </div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand" aria-label="Brand">
+      <div class="logo" aria-hidden="true">
+        <img src="https://i.ifh.cc/m1NNr0.jpg" alt="Logo" />
       </div>
-
-      <div class="actions">
-        <div class="seg" role="tablist" aria-label="Language">
-          <button id="langEN" class="active" role="tab" aria-selected="true" data-lang="en">EN</button>
-          <button id="langRU" role="tab" aria-selected="false" data-lang="ru">RU</button>
-          <button id="langUA" role="tab" aria-selected="false" data-lang="uk">UA</button>
-        </div>
-
-        <button class="btn" id="contactBtn" type="button" aria-label="Contact">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z" stroke="currentColor" stroke-width="1.7" opacity=".9"/>
-            <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span data-i18n="contact">Contact</span>
-        </button>
-
-        <button class="btn primary" id="downloadBtn" type="button" aria-label="Download APK">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M12 3v10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-            <path d="m8 11 4 4 4-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-            <path d="M5 20h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-          </svg>
-          <span data-i18n="download">Download</span>
-        </button>
+      <div class="brand-meta">
+        <div class="brand-name">GORILLA.UA</div>
+        <div class="brand-sub" data-i18n="top_sub">Official links & support</div>
       </div>
     </div>
-  </header>
 
-  <main class="wrap">
-    <!-- Hero -->
-    <section class="hero">
-      <div class="badge reveal">
-        <span class="dot" aria-hidden="true"></span>
-        <span data-i18n="badge">Catch the bonus by the tail</span>
-      </div>
-
-      <h1 class="reveal" data-i18n="h1">
-        20 FREE SPINS<br/>FOR WATCHING ADS
-      </h1>
-
-      <p class="sub reveal" data-i18n="sub">
-        Partners pay for the ads — you get real rewards. Simple win-win 😎
-      </p>
-    </section>
-
-    <!-- Links Section -->
-    <section class="section reveal" aria-label="Links">
-      <div class="section-inner">
-        <div class="section-title" data-i18n="links_title">Current links</div>
-
-        <!-- Telegram -->
-        <a class="link-card highlight" id="telegramCard" href="https://t.me/perehodnikgorilla" target="_blank" rel="noopener">
-          <div class="lc-left">
-            <div class="ic" aria-hidden="true">
-              <!-- Telegram icon -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M21.8 5.2 19 20.1c-.2 1.1-.9 1.4-1.9.9l-5.3-3.9-2.6 2.5c-.3.3-.5.5-1 .5l.4-5.6 10.1-9.1c.4-.4-.1-.6-.6-.3L6 13.2l-5.4-1.7c-1.2-.4-1.2-1.2.3-1.8L21 4.1c1-.5 1.8.2 1.5 1.1Z" fill="currentColor" opacity=".95"/>
-              </svg>
-            </div>
-            <div class="lc-text">
-              <p class="lc-title">Telegram</p>
-              <p class="lc-desc" data-i18n="tg_desc">Bot, актуальные ссылки и поддержка</p>
-            </div>
-          </div>
-          <div class="arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M7 17 17 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </a>
-
-        <!-- Download APK -->
-        <button class="link-card" id="downloadCard" type="button">
-          <div class="lc-left">
-            <div class="ic" aria-hidden="true">
-              <!-- Android-ish icon -->
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M7.5 9.2 6 6.6M16.5 9.2 18 6.6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                <path d="M8 9.5c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-                <path d="M6.5 10.2h11c.8 0 1.5.7 1.5 1.5V18c0 .8-.7 1.5-1.5 1.5h-11C5.7 19.5 5 18.8 5 18v-6.3c0-.8.7-1.5 1.5-1.5Z" stroke="currentColor" stroke-width="1.7"/>
-                <path d="M9 14v2M15 14v2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="lc-text">
-              <p class="lc-title" data-i18n="apk_title">Download the partner app</p>
-              <p class="lc-desc" data-i18n="apk_desc">Two ways: Telegram or MEGA</p>
-            </div>
-          </div>
-          <div class="arrow" aria-hidden="true">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M7 17 17 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </button>
-
-        <!-- Why us shutter -->
-        <details class="shutter" id="whyShutter">
-          <summary>
-            <div class="sh-title">
-              <span class="dot" aria-hidden="true" style="width:8px;height:8px;box-shadow:0 0 0 3px rgba(157,255,42,.10), 0 0 18px rgba(157,255,42,.22);"></span>
-              <span data-i18n="why_title">WHY US</span>
-            </div>
-            <div class="chev" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </div>
-          </summary>
-          <div class="sh-body" data-i18n="why_body">
-            <p class="lead"><b>A true win-win model.</b></p>
-            <p>We give out deposit bonuses, promo codes, and plenty of free spins in exchange for watching ads inside the new version of the app.</p>
-            <p>Advertisers cover the cost — you receive real in-game rewards for your attention. No hidden tricks. No unnecessary complications.</p>
-            <p><b>Watch ads → earn rewards → play with extra advantages.</b></p>
-            <p>Fair exchange. Your time — our bonuses.</p>
-          </div>
-        </details>
-      </div>
-    </section>
-
-    <div class="footer">
-      <div class="tiny">
-        <span class="pill">© <span id="year"></span> GORILLA.UA</span>
-        <span class="pill" data-i18n="foot_note">Official landing for links</span>
-      </div>
-
-      <!-- mobile language segment (shown under 720px) -->
-      <div class="seg" id="segMobile" style="display:flex; transform: translateY(1px);" role="tablist" aria-label="Language (mobile)">
+    <div class="actions">
+      <div class="seg" role="tablist" aria-label="Language">
         <button class="active" role="tab" aria-selected="true" data-lang="en">EN</button>
         <button role="tab" aria-selected="false" data-lang="ru">RU</button>
         <button role="tab" aria-selected="false" data-lang="uk">UA</button>
       </div>
-    </div>
-  </main>
 
-  <!-- Modal -->
-  <div class="modal-backdrop" id="backdrop" aria-hidden="true"></div>
-  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Download APK">
-    <div class="modal-head">
-      <div class="mh-left">
-        <p class="mh-title" data-i18n="modal_title">Download APK</p>
-        <p class="mh-sub" data-i18n="modal_sub">Choose the source you prefer</p>
-      </div>
-      <button class="xbtn" id="closeModal" type="button" aria-label="Close">
+      <button class="btn" id="contactBtn" type="button" aria-label="Contact">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Z" stroke="currentColor" stroke-width="1.7" opacity=".9"/>
+          <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
+        <span data-i18n="contact">Contact</span>
+      </button>
+
+      <button class="btn primary" id="downloadBtn" type="button" aria-label="Download APK">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3v10" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+          <path d="m8 11 4 4 4-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5 20h14" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+        </svg>
+        <span data-i18n="download">Download</span>
       </button>
     </div>
+  </div>
+</header>
 
-    <div class="modal-body">
-      <div class="two">
-        <a class="dl" href="https://t.me/perehodnikgorilla/3" target="_blank" rel="noopener">
-          <div>
-            <div><strong>Telegram</strong></div>
-            <small data-i18n="dl_tg">Fast & convenient download</small>
-          </div>
-          <span class="tag" data-i18n="recommended">Recommended</span>
-        </a>
+<main class="wrap">
+  <section class="hero">
+    <div class="badge reveal">
+      <span class="dot" aria-hidden="true"></span>
+      <span data-i18n="badge">Catch the bonus by the tail</span>
+    </div>
 
-        <a class="dl" href="https://mega.nz/file/3MlkGIRD#YZ4Ux_UML3ivEraeU9Mg6-BFqM1Uce5jtVknE1QmRc8" target="_blank" rel="noopener">
-          <div>
-            <div><strong>MEGA</strong></div>
-            <small data-i18n="dl_mega">Direct file source</small>
+    <h1 class="reveal" data-i18n="h1">
+      20 FREE SPINS<br/>FOR WATCHING ADS
+    </h1>
+
+    <p class="sub reveal" data-i18n="sub">
+      Partners pay for the ads — you get real rewards. Simple win-win 😎
+    </p>
+  </section>
+
+  <section class="section reveal" aria-label="Links">
+    <div class="section-inner">
+      <div class="section-title" data-i18n="links_title">Current links</div>
+
+      <!-- Telegram card -> CasinoThiefbot -->
+      <a class="link-card highlight" href="https://t.me/CasinoThiefbot" target="_blank" rel="noopener">
+        <div class="lc-left">
+          <div class="ic" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+              <path d="M21.8 5.2 19 20.1c-.2 1.1-.9 1.4-1.9.9l-5.3-3.9-2.6 2.5c-.3.3-.5.5-1 .5l.4-5.6 10.1-9.1c.4-.4-.1-.6-.6-.3L6 13.2l-5.4-1.7c-1.2-.4-1.2-1.2.3-1.8L21 4.1c1-.5 1.8.2 1.5 1.1Z" fill="currentColor" opacity=".95"/>
+            </svg>
           </div>
-          <span class="tag" style="border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.06); box-shadow:none; color: rgba(255,255,255,.85);" data-i18n="alternative">Alternative</span>
-        </a>
-      </div>
+          <div class="lc-text">
+            <p class="lc-title">Telegram</p>
+            <p class="lc-desc" data-i18n="tg_desc">Our Telegram bot, official links and support</p>
+          </div>
+        </div>
+        <div class="arrow" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M7 17 17 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M9 7h8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <!-- WHY US (open by default to fill bottom) -->
+      <details class="shutter" id="whyShutter" open>
+        <summary>
+          <div class="sh-title">
+            <span class="dot" aria-hidden="true" style="width:8px;height:8px;box-shadow:0 0 0 3px rgba(157,255,42,.10), 0 0 18px rgba(157,255,42,.22);"></span>
+            <span data-i18n="why_title">WHY US</span>
+          </div>
+          <div class="chev" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </summary>
+        <div class="sh-body" data-i18n="why_body"></div>
+      </details>
+    </div>
+  </section>
+
+  <div class="footer">
+    <div class="tiny">
+      <span class="pill">© <span id="year"></span> GORILLA.UA</span>
+      <span class="pill" data-i18n="foot_note">Official landing for links</span>
+    </div>
+
+    <div class="seg" id="segMobile" style="display:flex; transform: translateY(1px);" role="tablist" aria-label="Language (mobile)">
+      <button class="active" role="tab" aria-selected="true" data-lang="en">EN</button>
+      <button role="tab" aria-selected="false" data-lang="ru">RU</button>
+      <button role="tab" aria-selected="false" data-lang="uk">UA</button>
     </div>
   </div>
+</main>
 
-  <script>
-    // ========= i18n =========
-    const I18N = {
-      en: {
-        top_sub: "Official links & support",
-        contact: "Contact",
-        download: "Download",
-        badge: "Catch the bonus by the tail",
-        h1: "20 FREE SPINS<br/>FOR WATCHING ADS",
-        sub: "Partners pay for the ads — you get real rewards. Simple win-win 😎",
-        links_title: "Current links",
-        tg_desc: "Bot, official links and support",
-        apk_title: "Download the partner app",
-        apk_desc: "Two ways: Telegram or MEGA",
-        why_title: "WHY US",
-        why_body: `
-          <p class="lead"><b>A true win-win model.</b></p>
-          <p>We give out deposit bonuses, promo codes, and plenty of free spins in exchange for watching ads inside the new version of the app.</p>
-          <p>Advertisers cover the cost — you receive real in-game rewards for your attention. No hidden tricks. No unnecessary complications.</p>
-          <p><b>Watch ads → earn rewards → play with extra advantages.</b></p>
-          <p>Fair exchange. Your time — our bonuses.</p>
-        `,
-        foot_note: "Official landing for links",
-        modal_title: "Download APK",
-        modal_sub: "Choose the source you prefer",
-        dl_tg: "Fast & convenient download",
-        dl_mega: "Direct file source",
-        recommended: "Recommended",
-        alternative: "Alternative"
-      },
-      ru: {
-        top_sub: "Официальные ссылки и поддержка",
-        contact: "Связь",
-        download: "Скачать",
-        badge: "Хватай выгоду за хвост",
-        h1: "20 ФРИ СПИНОВ<br/>ЗА ПРОСМОТР РЕКЛАМЫ",
-        sub: "Партнёры оплачивают рекламу — вы получаете реальные бонусы. Win-win 😎",
-        links_title: "Актуальные ссылки",
-        tg_desc: "Наш бот, актуальные ссылки и поддержка",
-        apk_title: "Скачать партнёрское приложение",
-        apk_desc: "Два варианта: Telegram или MEGA",
-        why_title: "ПОЧЕМУ МЫ",
-        why_body: `
-          <p class="lead"><b>Win-win модель.</b></p>
-          <p>Мы раздаём бонусы к депозиту, промокоды и десятки фри-спинов за то, что вы смотрите рекламу в новой версии приложения.</p>
-          <p>Реклама оплачивается партнёрами — а вы получаете реальные бонусы за внимание. Без скрытых условий и лишней магии.</p>
-          <p><b>Смотрите рекламу → получаете награды → играете с дополнительным преимуществом.</b></p>
-          <p>Честная сделка. Вы — время. Мы — бонусы.</p>
-        `,
-        foot_note: "Официальная страница ссылок",
-        modal_title: "Скачать APK",
-        modal_sub: "Выберите удобный вариант",
-        dl_tg: "Быстро и удобно",
-        dl_mega: "Прямая ссылка на файл",
-        recommended: "Рекоменд.",
-        alternative: "Альтерн."
-      },
-      uk: {
-        top_sub: "Офіційні посилання та підтримка",
-        contact: "Звʼязок",
-        download: "Завантажити",
-        badge: "Хапай вигоду за хвіст",
-        h1: "20 ФРІ СПІНІВ<br/>ЗА ПЕРЕГЛЯД РЕКЛАМИ",
-        sub: "Партнери оплачують рекламу — ви отримуєте реальні бонуси. Win-win 😎",
-        links_title: "Актуальні посилання",
-        tg_desc: "Наш бот, офіційні посилання та підтримка",
-        apk_title: "Завантажити партнерський застосунок",
-        apk_desc: "Два варіанти: Telegram або MEGA",
-        why_title: "ЧОМУ МИ",
-        why_body: `
-          <p class="lead"><b>Модель win-win.</b></p>
-          <p>Ми надаємо бонуси до депозиту, промокоди та десятки фрі-спінів за перегляд реклами у новій версії застосунку.</p>
-          <p>Рекламу оплачують партнери — а ви отримуєте реальні бонуси за свою увагу. Без прихованих умов і зайвої магії.</p>
-          <p><b>Дивитесь рекламу → отримуєте нагороди → граєте з додатковою перевагою.</b></p>
-          <p>Чесна угода. Ви — час. Ми — бонуси.</p>
-        `,
-        foot_note: "Офіційна сторінка посилань",
-        modal_title: "Завантажити APK",
-        modal_sub: "Оберіть зручне джерело",
-        dl_tg: "Швидко та зручно",
-        dl_mega: "Пряме джерело файлу",
-        recommended: "Рекоменд.",
-        alternative: "Альтерн."
-      }
-    };
+<!-- Modal (Download variants: Telegram + MEGA stays) -->
+<div class="modal-backdrop" id="backdrop" aria-hidden="true"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Download APK">
+  <div class="modal-head">
+    <div class="mh-left">
+      <p class="mh-title" data-i18n="modal_title">Download APK</p>
+      <p class="mh-sub" data-i18n="modal_sub">Choose the source you prefer</p>
+    </div>
+    <button class="xbtn" id="closeModal" type="button" aria-label="Close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M7 7l10 10M17 7 7 17" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
 
-    const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  <div class="modal-body">
+    <div class="two">
+      <a class="dl" href="https://t.me/perehodnikgorilla/3" target="_blank" rel="noopener">
+        <div>
+          <div><strong>Telegram</strong></div>
+          <small data-i18n="dl_tg">Fast & convenient download</small>
+        </div>
+        <span class="tag" data-i18n="recommended">Recommended</span>
+      </a>
 
-    function setLang(lang){
-      const dict = I18N[lang] || I18N.en;
+      <a class="dl" href="https://mega.nz/file/3MlkGIRD#YZ4Ux_UML3ivEraeU9Mg6-BFqM1Uce5jtVknE1QmRc8" target="_blank" rel="noopener">
+        <div>
+          <div><strong>MEGA</strong></div>
+          <small data-i18n="dl_mega">Direct file source</small>
+        </div>
+        <span class="tag" style="border-color: rgba(255,255,255,.12); background: rgba(255,255,255,.06); box-shadow:none; color: rgba(255,255,255,.85);" data-i18n="alternative">Alternative</span>
+      </a>
+    </div>
+  </div>
+</div>
 
-      // update all data-i18n nodes
-      document.querySelectorAll("[data-i18n]").forEach(el=>{
-        const key = el.getAttribute("data-i18n");
-        const val = dict[key];
-        if (val == null) return;
-
-        // allow HTML for some keys
-        if (key === "h1" || key === "why_body") el.innerHTML = val;
-        else el.textContent = val;
-      });
-
-      // update active toggles
-      document.querySelectorAll("[data-lang]").forEach(btn=>{
-        const is = btn.getAttribute("data-lang") === lang;
-        btn.classList.toggle("active", is);
-        btn.setAttribute("aria-selected", is ? "true" : "false");
-      });
-
-      document.documentElement.lang = lang === "uk" ? "uk" : lang;
-      localStorage.setItem("gorilla_lang", lang);
+<script>
+  const I18N = {
+    en: {
+      top_sub: "Official links & support",
+      contact: "Contact",
+      download: "Download",
+      badge: "Catch the bonus by the tail",
+      h1: "20 FREE SPINS<br/>FOR WATCHING ADS",
+      sub: "Partners pay for the ads — you get real rewards. Simple win-win 😎",
+      links_title: "Current links",
+      tg_desc: "Our Telegram bot, official links and support",
+      why_title: "WHY US",
+      why_body: `
+        <p class="lead"><b>A true win-win model.</b></p>
+        <p>We give out deposit bonuses, promo codes, and plenty of free spins in exchange for watching ads inside the new version of the app.</p>
+        <p>Advertisers cover the cost — you receive real in-game rewards for your attention. No hidden tricks. No unnecessary complications.</p>
+        <p><b>Watch ads → earn rewards → play with extra advantages.</b></p>
+        <p>Fair exchange. Your time — our bonuses.</p>
+      `,
+      foot_note: "Official landing for links",
+      modal_title: "Download APK",
+      modal_sub: "Choose the source you prefer",
+      dl_tg: "Fast & convenient download",
+      dl_mega: "Direct file source",
+      recommended: "Recommended",
+      alternative: "Alternative"
+    },
+    ru: {
+      top_sub: "Официальные ссылки и поддержка",
+      contact: "Связь",
+      download: "Скачать",
+      badge: "Хватай выгоду за хвост",
+      h1: "20 ФРИ СПИНОВ<br/>ЗА ПРОСМОТР РЕКЛАМЫ",
+      sub: "Партнёры оплачивают рекламу — вы получаете реальные бонусы. Win-win 😎",
+      links_title: "Актуальные ссылки",
+      tg_desc: "Наш телеграм бот, актуальные ссылки и поддержка",
+      why_title: "ПОЧЕМУ МЫ",
+      why_body: `
+        <p class="lead"><b>Win-win модель.</b></p>
+        <p>Мы раздаём бонусы к депозиту, промокоды и десятки фри-спинов за то, что вы смотрите рекламу в новой версии приложения.</p>
+        <p>Реклама оплачивается партнёрами — а вы получаете реальные бонусы за внимание. Без скрытых условий и лишней магии.</p>
+        <p><b>Смотрите рекламу → получаете награды → играете с дополнительным преимуществом.</b></p>
+        <p>Честная сделка. Вы — время. Мы — бонусы.</p>
+      `,
+      foot_note: "Официальная страница ссылок",
+      modal_title: "Скачать APK",
+      modal_sub: "Выберите удобный вариант",
+      dl_tg: "Быстро и удобно",
+      dl_mega: "Прямая ссылка на файл",
+      recommended: "Рекоменд.",
+      alternative: "Альтерн."
+    },
+    uk: {
+      top_sub: "Офіційні посилання та підтримка",
+      contact: "Звʼязок",
+      download: "Завантажити",
+      badge: "Хапай вигоду за хвіст",
+      h1: "20 ФРІ СПІНІВ<br/>ЗА ПЕРЕГЛЯД РЕКЛАМИ",
+      sub: "Партнери оплачують рекламу — ви отримуєте реальні бонуси. Win-win 😎",
+      links_title: "Актуальні посилання",
+      tg_desc: "Наш телеграм бот, офіційні посилання та підтримка",
+      why_title: "ЧОМУ МИ",
+      why_body: `
+        <p class="lead"><b>Модель win-win.</b></p>
+        <p>Ми надаємо бонуси до депозиту, промокоди та десятки фрі-спінів за перегляд реклами у новій версії застосунку.</p>
+        <p>Рекламу оплачують партнери — а ви отримуєте реальні бонуси за свою увагу. Без прихованих умов і зайвої магії.</p>
+        <p><b>Дивитесь рекламу → отримуєте нагороди → граєте з додатковою перевагою.</b></p>
+        <p>Чесна угода. Ви — час. Ми — бонуси.</p>
+      `,
+      foot_note: "Офіційна сторінка посилань",
+      modal_title: "Завантажити APK",
+      modal_sub: "Оберіть зручне джерело",
+      dl_tg: "Швидко та зручно",
+      dl_mega: "Пряме джерело файлу",
+      recommended: "Рекоменд.",
+      alternative: "Альтерн."
     }
+  };
 
-    // auto language
-    (function initLang(){
-      const saved = localStorage.getItem("gorilla_lang");
-      if (saved && I18N[saved]) return setLang(saved);
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      const nav = (navigator.language || "en").toLowerCase();
-      if (nav.startsWith("ru")) return setLang("ru");
-      if (nav.startsWith("uk") || nav.startsWith("ua")) return setLang("uk");
-      return setLang("en");
-    })();
+  function setLang(lang){
+    const dict = I18N[lang] || I18N.en;
 
-    // lang buttons
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const key = el.getAttribute("data-i18n");
+      const val = dict[key];
+      if (val == null) return;
+
+      if (key === "h1") el.innerHTML = val;
+      else if (key === "why_body") el.innerHTML = val;
+      else el.textContent = val;
+    });
+
     document.querySelectorAll("[data-lang]").forEach(btn=>{
-      btn.addEventListener("click", ()=> setLang(btn.getAttribute("data-lang")));
+      const is = btn.getAttribute("data-lang") === lang;
+      btn.classList.toggle("active", is);
+      btn.setAttribute("aria-selected", is ? "true" : "false");
     });
 
-    // ========= Contact / Download logic =========
-    // Contact: if you want another link later — replace here.
-    const CONTACT_URL = "https://t.me/perehodnikgorilla";
-    document.getElementById("contactBtn").addEventListener("click", ()=>{
-      window.open(CONTACT_URL, "_blank", "noopener");
-    });
+    document.documentElement.lang = lang === "uk" ? "uk" : lang;
+    localStorage.setItem("gorilla_lang", lang);
+  }
 
-    // download modal
-    const downloadBtn = document.getElementById("downloadBtn");
-    const downloadCard = document.getElementById("downloadCard");
-    const modal = document.getElementById("modal");
-    const backdrop = document.getElementById("backdrop");
-    const closeModal = document.getElementById("closeModal");
+  (function initLang(){
+    const saved = localStorage.getItem("gorilla_lang");
+    if (saved && I18N[saved]) return setLang(saved);
 
-    function openModal(){
-      backdrop.classList.add("open");
-      modal.classList.add("open");
-      backdrop.setAttribute("aria-hidden","false");
-      // focus close for accessibility
-      closeModal.focus({preventScroll:true});
-      document.body.style.overflow = "hidden";
+    const nav = (navigator.language || "en").toLowerCase();
+    if (nav.startsWith("ru")) return setLang("ru");
+    if (nav.startsWith("uk") || nav.startsWith("ua")) return setLang("uk");
+    return setLang("en");
+  })();
+
+  document.querySelectorAll("[data-lang]").forEach(btn=>{
+    btn.addEventListener("click", ()=> setLang(btn.getAttribute("data-lang")));
+  });
+
+  // Bot link for both Telegram card and Contact button:
+  const BOT_URL = "https://t.me/CasinoThiefbot";
+  document.getElementById("contactBtn").addEventListener("click", ()=>{
+    window.open(BOT_URL, "_blank", "noopener");
+  });
+
+  // download modal open/close
+  const downloadBtn = document.getElementById("downloadBtn");
+  const modal = document.getElementById("modal");
+  const backdrop = document.getElementById("backdrop");
+  const closeModal = document.getElementById("closeModal");
+
+  function openModal(){
+    backdrop.classList.add("open");
+    modal.classList.add("open");
+    backdrop.setAttribute("aria-hidden","false");
+    closeModal.focus({preventScroll:true});
+    document.body.style.overflow = "hidden";
+  }
+  function hideModal(){
+    backdrop.classList.remove("open");
+    modal.classList.remove("open");
+    backdrop.setAttribute("aria-hidden","true");
+    document.body.style.overflow = "";
+  }
+
+  downloadBtn.addEventListener("click", openModal);
+  closeModal.addEventListener("click", hideModal);
+  backdrop.addEventListener("click", hideModal);
+  document.addEventListener("keydown", (e)=>{
+    if (e.key === "Escape") hideModal();
+  });
+
+  // reveal
+  function revealInit(){
+    const els = [...document.querySelectorAll(".reveal")];
+    if (prefersReduced){
+      els.forEach(el=> el.classList.add("on"));
+      return;
     }
-    function hideModal(){
-      backdrop.classList.remove("open");
-      modal.classList.remove("open");
-      backdrop.setAttribute("aria-hidden","true");
-      document.body.style.overflow = "";
-    }
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{
+        if (ent.isIntersecting){
+          ent.target.classList.add("on");
+          io.unobserve(ent.target);
+        }
+      });
+    }, {threshold: 0.14});
+    els.forEach(el=> io.observe(el));
+  }
+  revealInit();
 
-    downloadBtn.addEventListener("click", openModal);
-    downloadCard.addEventListener("click", openModal);
-    closeModal.addEventListener("click", hideModal);
-    backdrop.addEventListener("click", hideModal);
-    document.addEventListener("keydown", (e)=>{
-      if (e.key === "Escape") hideModal();
-    });
-
-    // ========= Reveal on scroll =========
-    function revealInit(){
-      const els = [...document.querySelectorAll(".reveal")];
-      if (prefersReduced){
-        els.forEach(el=> el.classList.add("on"));
-        return;
-      }
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(ent=>{
-          if (ent.isIntersecting){
-            ent.target.classList.add("on");
-            io.unobserve(ent.target);
-          }
-        });
-      }, {threshold: 0.14});
-      els.forEach(el=> io.observe(el));
-    }
-    revealInit();
-
-    // year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // nicer shutter behavior: keep it snappy
-    const why = document.getElementById("whyShutter");
-    why.addEventListener("toggle", ()=>{
-      if (why.open && !prefersReduced){
-        why.style.boxShadow = "0 18px 60px rgba(0,0,0,.28), var(--limeGlow)";
-        setTimeout(()=> why.style.boxShadow = "", 450);
-      }
-    });
-  </script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
