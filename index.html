@@ -5,21 +5,23 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f0c" />
   <title>GORILLA.UA</title>
+
   <style>
     :root{
       --bg0:#060a08;
       --bg1:#0b110e;
+
       --card: rgba(255,255,255,.06);
       --stroke: rgba(255,255,255,.10);
+
       --text: rgba(255,255,255,.92);
       --muted: rgba(255,255,255,.68);
       --muted2: rgba(255,255,255,.55);
+
       --shadow: 0 18px 70px rgba(0,0,0,.55);
       --shadow2: 0 10px 40px rgba(0,0,0,.40);
 
-      --r16: 16px;
       --r18: 18px;
-      --r22: 22px;
       --r28: 28px;
 
       --lime: #9DFF2A;
@@ -63,6 +65,7 @@
       *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
     }
 
+    /* Topbar */
     .topbar{
       position:sticky;
       top:0;
@@ -197,14 +200,15 @@
     .btn.primary:hover{filter: saturate(1.10) brightness(1.02)}
     .btn.primary svg{opacity:1}
 
-    /* Fill screen better */
+    /* Main layout */
     main.wrap{
       max-width: var(--max);
       margin: 0 auto;
-      padding: 14px var(--pad) 46px;
-      min-height: calc(100svh - 74px); /* topbar approx */
+      padding: 14px var(--pad) 120px; /* leave room for bottom CTA */
+      min-height: calc(100svh - 74px);
       display:flex;
       flex-direction:column;
+      gap: 0;
     }
 
     .hero{ padding: 24px 0 10px; }
@@ -253,7 +257,8 @@
       box-shadow: var(--shadow);
       overflow:hidden;
       position:relative;
-      flex: 1 1 auto; /* stretch to fill */
+      flex: 1 1 auto;
+      min-height: 280px;
     }
     .section:before{
       content:"";
@@ -335,7 +340,6 @@
       text-overflow:ellipsis;
       max-width: 56ch;
     }
-
     .arrow{
       width: 38px; height:38px;
       border-radius: 999px;
@@ -348,15 +352,14 @@
     .link-card:hover .arrow{ transform: translateX(1px); border-color: rgba(255,255,255,.14); }
     .link-card.highlight:hover .arrow{ border-color: rgba(157,255,42,.22); }
 
-    /* Shutter */
+    /* WHY US accordion (open by default to fill space) */
     .shutter{
       margin-top: 14px;
       border-radius: 18px;
       overflow:hidden;
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      margin-top: 14px;
-      flex: 1 1 auto; /* fill remainder */
+      flex: 1 1 auto;
       display:flex;
       flex-direction:column;
     }
@@ -398,9 +401,9 @@
       line-height: 1.55;
       flex: 1 1 auto;
     }
-    .sh-body b{color: rgba(255,255,255,.88)}
+    .sh-body b{color: rgba(255,255,255,.90)}
     .sh-body p{margin: 10px 0 0}
-    .sh-body .lead{color: rgba(255,255,255,.82); margin-top: 8px}
+    .sh-body .lead{color: rgba(255,255,255,.88); margin-top: 8px}
 
     .footer{
       margin-top: 14px;
@@ -425,7 +428,7 @@
       color: rgba(255,255,255,.55);
     }
 
-    /* Modal */
+    /* Modal (Download variants) */
     .modal-backdrop{
       position:fixed; inset:0;
       background: rgba(0,0,0,.55);
@@ -493,7 +496,6 @@
       grid-template-columns: 1fr;
       gap: 12px;
     }
-
     .dl{
       display:flex;
       align-items:center;
@@ -542,6 +544,78 @@
       outline: 2px solid rgba(157,255,42,.55);
       outline-offset: 3px;
       border-radius: 12px;
+    }
+
+    /* ===== Bottom pulsing CTA ===== */
+    .bottom-cta{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      width: calc(100% - 28px);
+      max-width: 720px;
+      padding: 16px 18px;
+      border-radius: 22px;
+      text-align: center;
+      font-weight: 950;
+      font-size: 15px;
+      letter-spacing: .3px;
+      text-decoration: none;
+
+      background: linear-gradient(180deg, #9DFF2A, #79d81f);
+      color: #071007;
+
+      border: 1px solid rgba(157,255,42,.45);
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.5),
+        0 0 35px rgba(157,255,42,.45);
+
+      transition: transform .15s ease, filter .2s ease, box-shadow .2s ease;
+      z-index: 999;
+
+      -webkit-tap-highlight-color: transparent;
+    }
+    .bottom-cta:hover{
+      transform: translateX(-50%) translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.6),
+        0 0 55px rgba(157,255,42,.65);
+    }
+    .bottom-cta:active{
+      transform: translateX(-50%) scale(.98);
+    }
+
+    @keyframes breatheGlow{
+      0%{
+        box-shadow:
+          0 18px 55px rgba(0,0,0,.50),
+          0 0 28px rgba(157,255,42,.35);
+        filter: saturate(1.02) brightness(1.00);
+      }
+      50%{
+        box-shadow:
+          0 26px 78px rgba(0,0,0,.60),
+          0 0 64px rgba(157,255,42,.72);
+        filter: saturate(1.12) brightness(1.04);
+      }
+      100%{
+        box-shadow:
+          0 18px 55px rgba(0,0,0,.50),
+          0 0 28px rgba(157,255,42,.35);
+        filter: saturate(1.02) brightness(1.00);
+      }
+    }
+    @keyframes breatheScale{
+      0%{ transform: translateX(-50%) scale(1); }
+      50%{ transform: translateX(-50%) scale(1.015); }
+      100%{ transform: translateX(-50%) scale(1); }
+    }
+    .bottom-cta.pulse{
+      animation: breatheGlow 2.4s ease-in-out infinite, breatheScale 2.4s ease-in-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce){
+      .bottom-cta.pulse{ animation:none; }
     }
   </style>
 </head>
@@ -627,7 +701,7 @@
         </div>
       </a>
 
-      <!-- WHY US (open by default to fill bottom) -->
+      <!-- WHY US (open by default to fill space) -->
       <details class="shutter" id="whyShutter" open>
         <summary>
           <div class="sh-title">
@@ -659,7 +733,12 @@
   </div>
 </main>
 
-<!-- Modal (Download variants: Telegram + MEGA stays) -->
+<!-- Bottom pulsing CTA (goes to Telegram APK) -->
+<a href="https://t.me/perehodnikgorilla/3" class="bottom-cta pulse" target="_blank" rel="noopener">
+  <span data-i18n="bottom_cta">🔥 Download APK & claim bonuses</span>
+</a>
+
+<!-- Modal (Download variants) -->
 <div class="modal-backdrop" id="backdrop" aria-hidden="true"></div>
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Download APK">
   <div class="modal-head">
@@ -706,15 +785,19 @@
       sub: "Partners pay for the ads — you get real rewards. Simple win-win 😎",
       links_title: "Current links",
       tg_desc: "Our Telegram bot, official links and support",
+
       why_title: "WHY US",
       why_body: `
-        <p class="lead"><b>A true win-win model.</b></p>
-        <p>We give out deposit bonuses, promo codes, and plenty of free spins in exchange for watching ads inside the new version of the app.</p>
-        <p>Advertisers cover the cost — you receive real in-game rewards for your attention. No hidden tricks. No unnecessary complications.</p>
-        <p><b>Watch ads → earn rewards → play with extra advantages.</b></p>
-        <p>Fair exchange. Your time — our bonuses.</p>
+        <p class="lead"><b>Want bonuses? Then download the APK.</b></p>
+        <p>Only the new app version unlocks deposit boosts, exclusive promo codes and tons of free spins for watching ads.</p>
+        <p><b>No APK — no free spins.</b> Simple.</p>
+        <p><b>Download → watch ads → earn real rewards.</b></p>
+        <p>Advertisers pay for attention. You take the bonuses.</p>
       `,
+
       foot_note: "Official landing for links",
+      bottom_cta: "🔥 Download APK & claim bonuses",
+
       modal_title: "Download APK",
       modal_sub: "Choose the source you prefer",
       dl_tg: "Fast & convenient download",
@@ -722,6 +805,7 @@
       recommended: "Recommended",
       alternative: "Alternative"
     },
+
     ru: {
       top_sub: "Официальные ссылки и поддержка",
       contact: "Связь",
@@ -731,15 +815,19 @@
       sub: "Партнёры оплачивают рекламу — вы получаете реальные бонусы. Win-win 😎",
       links_title: "Актуальные ссылки",
       tg_desc: "Наш телеграм бот, актуальные ссылки и поддержка",
+
       why_title: "ПОЧЕМУ МЫ",
       why_body: `
-        <p class="lead"><b>Win-win модель.</b></p>
-        <p>Мы раздаём бонусы к депозиту, промокоды и десятки фри-спинов за то, что вы смотрите рекламу в новой версии приложения.</p>
-        <p>Реклама оплачивается партнёрами — а вы получаете реальные бонусы за внимание. Без скрытых условий и лишней магии.</p>
-        <p><b>Смотрите рекламу → получаете награды → играете с дополнительным преимуществом.</b></p>
-        <p>Честная сделка. Вы — время. Мы — бонусы.</p>
+        <p class="lead"><b>Хочешь бонусы? Тогда качай APK.</b></p>
+        <p>Только в новой версии приложения ты получаешь бонусы к депозиту, эксклюзивные промокоды и десятки фри-спинов за просмотр рекламы.</p>
+        <p><b>Без APK — нет фриспинов.</b> Всё просто.</p>
+        <p><b>Скачал → смотришь рекламу → получаешь реальные награды.</b></p>
+        <p>Партнёры платят за внимание. Ты забираешь бонусы.</p>
       `,
+
       foot_note: "Официальная страница ссылок",
+      bottom_cta: "🔥 Скачать APK и забрать бонусы",
+
       modal_title: "Скачать APK",
       modal_sub: "Выберите удобный вариант",
       dl_tg: "Быстро и удобно",
@@ -747,6 +835,7 @@
       recommended: "Рекоменд.",
       alternative: "Альтерн."
     },
+
     uk: {
       top_sub: "Офіційні посилання та підтримка",
       contact: "Звʼязок",
@@ -756,15 +845,19 @@
       sub: "Партнери оплачують рекламу — ви отримуєте реальні бонуси. Win-win 😎",
       links_title: "Актуальні посилання",
       tg_desc: "Наш телеграм бот, офіційні посилання та підтримка",
+
       why_title: "ЧОМУ МИ",
       why_body: `
-        <p class="lead"><b>Модель win-win.</b></p>
-        <p>Ми надаємо бонуси до депозиту, промокоди та десятки фрі-спінів за перегляд реклами у новій версії застосунку.</p>
-        <p>Рекламу оплачують партнери — а ви отримуєте реальні бонуси за свою увагу. Без прихованих умов і зайвої магії.</p>
-        <p><b>Дивитесь рекламу → отримуєте нагороди → граєте з додатковою перевагою.</b></p>
-        <p>Чесна угода. Ви — час. Ми — бонуси.</p>
+        <p class="lead"><b>Хочеш бонуси? Завантаж APK.</b></p>
+        <p>Лише нова версія застосунку відкриває бонуси до депозиту, ексклюзивні промокоди та десятки фрі-спінів за перегляд реклами.</p>
+        <p><b>Без APK — немає фрі-спінів.</b> Усе просто.</p>
+        <p><b>Завантажив → дивишся рекламу → отримуєш реальні нагороди.</b></p>
+        <p>Партнери платять за увагу. Ти забираєш бонуси.</p>
       `,
+
       foot_note: "Офіційна сторінка посилань",
+      bottom_cta: "🔥 Завантаж APK і забери бонуси",
+
       modal_title: "Завантажити APK",
       modal_sub: "Оберіть зручне джерело",
       dl_tg: "Швидко та зручно",
@@ -784,8 +877,7 @@
       const val = dict[key];
       if (val == null) return;
 
-      if (key === "h1") el.innerHTML = val;
-      else if (key === "why_body") el.innerHTML = val;
+      if (key === "h1" || key === "why_body") el.innerHTML = val;
       else el.textContent = val;
     });
 
@@ -813,13 +905,13 @@
     btn.addEventListener("click", ()=> setLang(btn.getAttribute("data-lang")));
   });
 
-  // Bot link for both Telegram card and Contact button:
+  // Bot link for "Contact"
   const BOT_URL = "https://t.me/CasinoThiefbot";
   document.getElementById("contactBtn").addEventListener("click", ()=>{
     window.open(BOT_URL, "_blank", "noopener");
   });
 
-  // download modal open/close
+  // Download modal open/close
   const downloadBtn = document.getElementById("downloadBtn");
   const modal = document.getElementById("modal");
   const backdrop = document.getElementById("backdrop");
